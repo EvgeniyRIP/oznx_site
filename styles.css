@@ -828,3 +828,35 @@ footer {
     background-color: rgba(8, 8, 16, 0.97);
     box-shadow: 0 5px 25px rgba(138, 43, 226, 0.5);
 }
+
+/* Стили для ссылок в карточках сервисов */
+.service-link {
+    display: inline-block;
+    margin-top: 15px;
+    color: var(--neon-purple);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.service-link:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--neon-purple);
+    transition: width 0.3s ease;
+}
+
+.service-link:hover {
+    color: var(--neon-blue);
+    text-shadow: 0 0 5px var(--neon-blue);
+}
+
+.service-link:hover:after {
+    width: 100%;
+    background-color: var(--neon-blue);
+}

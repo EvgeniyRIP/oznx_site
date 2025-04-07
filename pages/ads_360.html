@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OZNX - Реклама 360° для маркетплейсов</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Специфичные стили для страницы рекламы 360° */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .feature-card {
+            background: rgba(5, 5, 10, 0.7);
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(125, 71, 179, 0.25);
+            box-shadow: 0 0 10px rgba(125, 71, 179, 0.25);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(125, 71, 179, 0.4);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--neon-purple);
+        }
+        
+        .feature-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--light-text);
+        }
+        
+        .feature-text {
+            color: var(--light-text);
+            opacity: 0.9;
+        }
+        
+        .demo-section {
+            margin-top: 80px;
+            background: rgba(5, 5, 10, 0.85);
+            padding: 50px 0;
+            border-radius: 10px;
+        }
+        
+        .demo-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .demo-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .demo-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(125, 71, 179, 0.4);
+        }
+        
+        .demo-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .highlight {
+            color: var(--neon-purple);
+            font-weight: 600;
+        }
+        
+        .testimonials {
+            margin-top: 80px;
+        }
+        
+        .testimonial-card {
+            background: rgba(5, 5, 10, 0.7);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(125, 71, 179, 0.25);
+            box-shadow: 0 0 10px rgba(125, 71, 179, 0.25);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 15px;
+            color: var(--light-text);
+            opacity: 0.9;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--neon-purple);
+        }
+        
+        .cta-box {
+            background: rgba(125, 71, 179, 0.15);
+            border-radius: 10px;
+            padding: 40px;
+            margin: 60px 0;
+            text-align: center;
+            border: 1px solid rgba(125, 71, 179, 0.3);
+            box-shadow: 0 0 20px rgba(125, 71, 179, 0.3);
+        }
+        
+        .cta-box h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: var(--light-text);
+            text-shadow: 0 0 10px var(--neon-purple);
+        }
+        
+        .cta-box p {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            color: var(--light-text);
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .stat-card {
+            background: rgba(5, 5, 10, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(125, 71, 179, 0.25);
+            box-shadow: 0 0 10px rgba(125, 71, 179, 0.25);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 5px rgba(125, 71, 179, 0.5);
+        }
+        
+        .stat-label {
+            color: var(--light-text);
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 40px 0;
+            background: rgba(5, 5, 10, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(125, 71, 179, 0.2);
+        }
+        
+        .comparison-table th {
+            background: rgba(125, 71, 179, 0.2);
+            color: var(--light-text);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .yes-icon {
+            color: #4CD964;
+        }
+        
+        .no-icon {
+            color: #FF3B30;
+        }
+        
+        .platform-column {
+            background: rgba(125, 71, 179, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/logo.jpg" alt="OZNX Logo">
+                </a>
+            </div>
+            <nav>
+                <ul class="menu">
+                    <li><a href="../index.html">Главная</a></li>
+                    <li><a href="../index.html#services">Сервисы</a></li>
+                    <li><a href="../index.html#gallery">Галерея</a></li>
+                    <li><a href="../index.html#about">О нас</a></li>
+                    <li><a href="../index.html#contact">Контакты</a></li>
+                </ul>
+            </nav>
+            <div class="menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Главный экран -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Реклама 360° для маркетплейсов</h1>
+                <h2>Увидите реальную прибыль каждого товара в каждой РК</h2>
+                <p>Больше никаких "черных ящиков" в рекламе. Точный расчет ROAS, маржинальности и эффективности каждой кампании с учетом комиссий, логистики и всех затрат.</p>
+                <a href="#demo" class="btn glow-btn">Увидеть в действии</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Почему обычная аналитика не работает</h2>
+                <p>Распространенные ошибки в оценке эффективности рекламы</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3 class="feature-title">Неполный учет затрат</h3>
+                    <p class="feature-text">Реклама может казаться прибыльной, если не учитывать комиссии маркетплейса, логистику, хранение и возвраты. Мы считаем всё!</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3 class="feature-title">Смешивание данных</h3>
+                    <p class="feature-text">Типичная ошибка - смешивание органических и рекламных продаж. Наша система точно разделяет эти потоки, показывая истинную картину.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3 class="feature-title">Отложенный эффект</h3>
+                    <p class="feature-text">Реклама часто приносит результат не сразу. Мы отслеживаем продажи в течение 30 дней после клика, чтобы учесть отложенный спрос.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h3 class="feature-title">Разная маржинальность</h3>
+                    <p class="feature-text">При одинаковом ROAS товары с разной маржой дают разную прибыль. Наша система учитывает маржинальность каждого SKU.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search-dollar"></i>
+                    </div>
+                    <h3 class="feature-title">Кросс-продажи</h3>
+                    <p class="feature-text">Реклама одного товара может приводить к покупке других товаров из вашего ассортимента. Мы учитываем и этот эффект.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Отсутствие автоматизации</h3>
+                    <p class="feature-text">Ручной анализ занимает много времени и содержит ошибки. Наша система работает 24/7, автоматически обновляя все метрики.</p>
+                </div>
+            </div>
+            
+            <div class="cta-box">
+                <h2>Прекратите сливать бюджет</h2>
+                <p>В среднем, до 40% рекламного бюджета на маркетплейсах тратится на неэффективные кампании. С нашей системой аналитики вы сможете оптимизировать рекламу и увеличить прибыль даже без увеличения бюджета.</p>
+                <a href="#contact" class="btn glow-btn">Подключить Рекламу 360°</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Результаты -->
+    <section class="demo-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Реальные результаты наших клиентов</h2>
+                <p>Цифры говорят сами за себя</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">+47%</div>
+                    <div class="stat-label">Средний рост ROAS</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">-32%</div>
+                    <div class="stat-label">Снижение убыточных кампаний</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">+25%</div>
+                    <div class="stat-label">Рост маржинальности</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-number">3-4х</div>
+                    <div class="stat-label">Ускорение принятия решений</div>
+                </div>
+            </div>
+            
+            <div class="comparison-table-container">
+                <h3>Сравнение с другими решениями</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Функция</th>
+                            <th>Стандартная отчетность</th>
+                            <th>Сторонние сервисы</th>
+                            <th class="platform-column">OZNX Реклама 360°</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Учет комиссий и логистики</td>
+                            <td><i class="fas fa-times no-icon"></i></td>
+                            <td><i class="fas fa-check yes-icon"></i> Частично</td>
+                            <td class="platform-column"><i class="fas fa-check yes-icon"></i> Полностью</td>
+                        </tr>
+                        <tr>
+                            <td>Отслеживание отложенных конверсий</td>
+                            <td><i class="fas fa-times no-icon"></i></td>
+                            <td><i class="fas fa-check yes-icon"></i> До 7 дней</td>
+                            <td class="platform-column"><i class="fas fa-check yes-icon"></i> До 30 дней</td>
+                        </tr>
+                        <tr>
+                            <td>Атрибуция по SKU</td>
+                            <td><i class="fas fa-check yes-icon"></i> Базовая</td>
+                            <td><i class="fas fa-check yes-icon"></i> Средняя</td>
+                            <td class="platform-column"><i class="fas fa-check yes-icon"></i> Расширенная</td>
+                        </tr>
+                        <tr>
+                            <td>Учет кросс-продаж</td>
+                            <td><i class="fas fa-times no-icon"></i></td>
+                            <td><i class="fas fa-times no-icon"></i></td>
+                            <td class="platform-column"><i class="fas fa-check yes-icon"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Автоматическая оптимизация ставок</td>
+                            <td><i class="fas fa-times no-icon"></i></td>
+                            <td><i class="fas fa-check yes-icon"></i> Базовая</td>
+                            <td class="platform-column"><i class="fas fa-check yes-icon"></i> Продвинутая</td>
+                        </tr>
+                        <tr>
+                            <td>Прогнозирование ROAS</td>
+                            <td><i class="fas fa-times no-icon"></i></td>
+                            <td><i class="fas fa-times no-icon"></i></td>
+                            <td class="platform-column"><i class="fas fa-check yes-icon"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Демонстрация -->
+    <section id="demo" class="demo-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Как это работает</h2>
+                <p>Полная прозрачность вашей рекламы</p>
+            </div>
+            
+            <div class="demo-content">
+                <div class="demo-text">
+                    <h3>Комплексная аналитика рекламы</h3>
+                    <p>Наша система автоматически собирает данные из рекламных кабинетов маркетплейсов, аналитики продаж, учитывает все затраты и предоставляет единую панель управления с точными метриками по каждой кампании и товару.</p>
+                    <p>Что вы получаете:</p>
+                    <ul>
+                        <li>Единую панель управления всеми рекламными кампаниями</li>
+                        <li>Точный расчет ROAS с учетом всех затрат</li>
+                        <li>Анализ эффективности рекламы на уровне отдельных SKU</li>
+                        <li>Автоматические рекомендации по оптимизации ставок</li>
+                        <li>Отслеживание конверсии и отложенного спроса</li>
+                        <li>Прогнозирование результатов при изменении стратегии</li>
+                    </ul>
+                    <a href="#" class="btn glow-btn">Запросить демо-доступ</a>
+                </div>
+                <div class="demo-image">
+                    <img src="../images/analytics2.jpg" alt="Демонстрация Рекламы 360°">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Отзывы клиентов -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Отзывы наших клиентов</h2>
+                <p>Что говорят продавцы, использующие Рекламу 360°</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"После подключения системы Реклама 360° мы обнаружили, что 30% наших рекламных кампаний работали в убыток, хотя по отчетам маркетплейса они казались прибыльными. Перераспределив бюджет, мы увеличили общую прибыль на 42% при тех же затратах на рекламу."</p>
+                    <p class="testimonial-author">Сергей, владелец магазина товаров для дома</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Раньше я ежедневно тратил около 3 часов на анализ рекламных кампаний и все равно не был уверен в точности данных. Теперь система делает это автоматически, а я могу сосредоточиться на развитии бизнеса. При этом точность прогнозов ROAS просто поражает!"</p>
+                    <p class="testimonial-author">Мария, маркетолог интернет-магазина</p>
+                </div>
+                
+                <div class="testimonial-card">
+                    <p class="testimonial-text">"Благодаря системе учета кросс-продаж мы обнаружили неожиданный эффект: реклама аксессуаров приводила к продаже основных товаров. Раньше мы считали ее неэффективной и хотели отключить. Теперь эта стратегия стала основой нашего маркетинга на площадках."</p>
+                    <p class="testimonial-author">Андрей, руководитель отдела маркетинга</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Призыв к действию -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Начните прямо сейчас</h2>
+                <p>Бесплатный аудит ваших рекламных кампаний</p>
+            </div>
+            
+            <div class="cta-box">
+                <h2>Подключите Рекламу 360°</h2>
+                <p>Получите бесплатный аудит ваших рекламных кампаний и узнайте, сколько денег вы теряете на неэффективной рекламе. Настройка системы занимает всего 1 день, а результаты вы увидите мгновенно.</p>
+                <a href="#" class="btn glow-btn">Запросить аудит</a>
+            </div>
+            
+            <div class="contact-form neon-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Имя</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="marketplace">Маркетплейсы</label>
+                        <input type="text" id="marketplace" name="marketplace" placeholder="Ozon, Wildberries, Яндекс Маркет..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ad_budget">Месячный рекламный бюджет</label>
+                        <input type="text" id="ad_budget" name="ad_budget" placeholder="Например: 100 000 руб." required>
+                    </div>
+                    <button type="submit" class="btn glow-btn">Получить бесплатный аудит</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3>OZNX Analytics</h3>
+                    <p>Аналитика маркетплейсов для успешного бизнеса</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Быстрые ссылки</h3>
+                    <ul>
+                        <li><a href="../index.html">Главная</a></li>
+                        <li><a href="../index.html#services">Сервисы</a></li>
+                        <li><a href="../index.html#gallery">Галерея</a></li>
+                        <li><a href="../index.html#about">О нас</a></li>
+                        <li><a href="../index.html#contact">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Социальные сети</h3>
+                    <div class="social-icons">
+                        <a href="#" class="neon-icon"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="neon-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="neon-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="neon-icon"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <h3>Контакты</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Москва, ул. Примерная, 123</p>
+                    <p><i class="fas fa-phone"></i> +7 (999) 123-45-67</p>
+                    <p><i class="fas fa-envelope"></i> info@oznx.ru</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 OZNX Analytics. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
