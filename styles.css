@@ -829,6 +829,24 @@ footer {
     box-shadow: 0 5px 25px rgba(138, 43, 226, 0.5);
 }
 
+/* Стили для карточек сервисов с использованием flexbox */
+.service-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 320px; /* Минимальная высота для карточек */
+    justify-content: space-between; /* Распределение пространства */
+}
+
+.service-card .service-icon,
+.service-card h3,
+.service-card p {
+    flex-shrink: 0; /* Предотвращение сжатия элементов */
+}
+
+.service-card p {
+    margin-bottom: auto; /* Автоматический отступ снизу для текста */
+}
+
 /* Стили для ссылок в карточках сервисов */
 .service-link {
     display: inline-block;
@@ -838,6 +856,7 @@ footer {
     font-weight: 500;
     transition: all 0.3s ease;
     position: relative;
+    align-self: center; /* Центрирование ссылки по горизонтали */
 }
 
 .service-link:after {
