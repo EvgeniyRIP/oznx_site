@@ -1,0 +1,646 @@
+/* Мобильные стили для OZNX Site */
+
+/* Глобальные настройки для мобильной версии */
+@media screen and (max-width: 992px) {
+    /* Стили для планшетов */
+    .hero-content h1 {
+        font-size: 3rem;
+    }
+    
+    .hero-content h2 {
+        font-size: 1.8rem;
+    }
+    
+    .hero-content p {
+        font-size: 1.1rem;
+    }
+    
+    .about-content {
+        flex-direction: column;
+    }
+    
+    section {
+        padding: 80px 0;
+    }
+    
+    .service-card {
+        min-height: 340px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    header .container {
+        padding: 12px 15px;
+    }
+    
+    .logo img {
+        height: 50px;
+        width: 50px;
+    }
+
+    .menu {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        flex-direction: column;
+        background-color: rgba(8, 8, 16, 0.95);
+        width: 100%;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 15px rgba(138, 43, 226, 0.3);
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+        /* Стили для скроллбара в меню */
+        scrollbar-width: thin;
+        scrollbar-color: var(--neon-purple) rgba(8, 8, 16, 0.5);
+    }
+    
+    /* Стили для WebKit скроллбара */
+    .menu::-webkit-scrollbar {
+        width: 5px;
+    }
+    
+    .menu::-webkit-scrollbar-track {
+        background: rgba(8, 8, 16, 0.5);
+    }
+    
+    .menu::-webkit-scrollbar-thumb {
+        background-color: var(--neon-purple);
+        border-radius: 10px;
+    }
+
+    .menu.active {
+        left: 0;
+    }
+
+    .menu li {
+        margin: 0;
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+    }
+    
+    .menu li:last-child {
+        border-bottom: none;
+    }
+
+    .menu li a {
+        font-size: 1rem;
+    }
+
+    .menu-btn {
+        display: block;
+        padding: 10px;
+        z-index: 1001;
+        width: 45px;
+        height: 45px;
+        text-align: center;
+        border-radius: 5px;
+        background: rgba(15, 15, 26, 0.5);
+        border: 1px solid rgba(138, 43, 226, 0.2);
+        box-shadow: 0 0 8px rgba(138, 43, 226, 0.2);
+        transition: all 0.3s ease;
+    }
+    
+    .menu-btn:active {
+        transform: scale(0.95);
+        box-shadow: 0 0 12px rgba(138, 43, 226, 0.4);
+    }
+    
+    .menu-btn i {
+        font-size: 1.5rem;
+    }
+
+    .hero-content {
+        text-align: center;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+    
+    .hero-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-content h2 {
+        font-size: 1.4rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+    }
+    
+    .section-header h2 {
+        font-size: 2rem;
+    }
+    
+    .section-header p {
+        font-size: 1rem;
+    }
+
+    section {
+        padding: 60px 0;
+    }
+    
+    .service-card {
+        margin-bottom: 20px;
+        min-height: 300px;
+    }
+    
+    .gallery-item {
+        margin-bottom: 20px;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: 10px;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+    }
+    
+    .services-carousel {
+        gap: 20px;
+    }
+    
+    .neon-text-container {
+        padding: 20px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    /* Стили для мобильных устройств */
+    .hero {
+        height: auto;
+        min-height: 100vh;
+        padding-top: 70px;
+        padding-bottom: 40px;
+    }
+    
+    .hero-content h1 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    
+    .hero-content h2 {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+    }
+    
+    .hero-content p {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+    
+    .section-header {
+        margin-bottom: 30px;
+    }
+    
+    .section-header h2 {
+        font-size: 1.6rem;
+    }
+    
+    .section-header p {
+        font-size: 0.9rem;
+    }
+    
+    .service-card {
+        padding: 20px;
+        min-height: 280px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .service-card h3 {
+        font-size: 1.3rem;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+    
+    .service-card p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        flex-grow: 1;
+    }
+    
+    .service-card .service-icon {
+        margin-bottom: 15px;
+    }
+    
+    .service-link {
+        margin-top: 15px;
+        padding: 8px 15px;
+        border-radius: 5px;
+        background: rgba(138, 43, 226, 0.1);
+        border: 1px solid rgba(138, 43, 226, 0.2);
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+    
+    .service-link:hover,
+    .service-link:active {
+        background: rgba(138, 43, 226, 0.2);
+    }
+    
+    .gallery-item {
+        height: 200px;
+    }
+    
+    .gallery-overlay h3 {
+        font-size: 1.1rem;
+    }
+    
+    .gallery-overlay p {
+        font-size: 0.8rem;
+    }
+    
+    .about-text p {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+    
+    .neon-form {
+        padding: 20px;
+    }
+    
+    .form-group label {
+        font-size: 0.8rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        font-size: 0.9rem;
+    }
+    
+    .footer-about h3,
+    .footer-links h3,
+    .footer-social h3,
+    .footer-contact h3 {
+        font-size: 1.2rem;
+    }
+    
+    .footer-contact p {
+        font-size: 0.9rem;
+    }
+    
+    .carousel-nav {
+        gap: 15px;
+        margin-top: 25px;
+    }
+    
+    .prev-btn,
+    .next-btn {
+        width: 45px;
+        height: 45px;
+        box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* Улучшение отзывчивости кнопок карусели */
+    .prev-btn:active,
+    .next-btn:active {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+    
+    /* Стилизация dot-навигации для лучшей доступности */
+    .dot {
+        width: 12px;
+        height: 12px;
+        margin: 0 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 5px rgba(138, 43, 226, 0.3);
+    }
+    
+    .dot.active {
+        transform: scale(1.2);
+    }
+    
+    .service-icon {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+    
+    /* Исправление для карусели на мобильных */
+    .services-carousel {
+        padding-left: 5px;
+        padding-right: 5px;
+        gap: 15px;
+    }
+    
+    /* Улучшение для мобильного меню - добавляем отступы для кликабельности */
+    .menu li {
+        padding: 18px 0;
+    }
+    
+    /* Улучшение отображения социальных иконок в футере */
+    .social-icons {
+        justify-content: center;
+    }
+    
+    /* Центрирование контактной информации в футере */
+    .footer-contact p {
+        justify-content: center;
+    }
+    
+    /* Улучшение доступности галереи на мобильных */
+    .gallery-overlay {
+        transform: translateY(0);
+        opacity: 0.9;
+    }
+    
+    /* Всегда показывать описание карточек галереи на мобильных для лучшего UX */
+    .gallery-overlay {
+        background: linear-gradient(to top, rgba(8, 8, 16, 0.9) 30%, transparent);
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        height: auto;
+        min-height: 80px;
+        transform: translateY(0) !important;
+    }
+    
+    /* Улучшение отображения изображений в галерее */
+    .gallery-item {
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .gallery-item img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.5s ease;
+    }
+    
+    /* Улучшение кнопок для лучшего касания на мобильных */
+    .btn {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Улучшения для очень маленьких экранов */
+@media screen and (max-width: 380px) {
+    .hero-content h1 {
+        font-size: 1.6rem;
+    }
+    
+    .hero-content h2 {
+        font-size: 1.1rem;
+    }
+    
+    .service-card {
+        padding: 15px;
+    }
+    
+    .service-icon {
+        font-size: 1.8rem;
+    }
+    
+    .service-card h3 {
+        font-size: 1.2rem;
+    }
+    
+    .footer {
+        padding: 50px 0 20px;
+    }
+    
+    .footer-content {
+        gap: 20px;
+    }
+    
+    /* Уменьшаем высоту заголовка для очень маленьких экранов */
+    header .container {
+        padding: 10px;
+    }
+    
+    .logo img {
+        height: 40px;
+        width: 40px;
+    }
+    
+    /* Уменьшаем размер кнопок */
+    .btn {
+        padding: 10px 15px;
+        font-size: 0.8rem;
+    }
+    
+    /* Оптимизируем размер dot-навигации */
+    .dot {
+        width: 10px;
+        height: 10px;
+    }
+    
+    /* Уменьшаем отступы в секциях */
+    section {
+        padding: 40px 0;
+    }
+    
+    /* Улучшаем размеры шрифтов для лучшей читаемости */
+    .section-header h2 {
+        font-size: 1.4rem;
+    }
+    
+    /* Уменьшаем размер иконок в футере */
+    .social-icons a {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+}
+
+/* Портретная ориентация на телефонах */
+@media screen and (max-width: 480px) and (orientation: portrait) {
+    .hero {
+        min-height: 90vh;
+    }
+    
+    /* Уменьшаем высоту галерейных элементов */
+    .gallery-item {
+        height: 180px;
+    }
+    
+    /* Центрируем содержимое героя */
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 0 10px;
+    }
+}
+
+/* Ландшафтная ориентация на телефонах */
+@media screen and (max-height: 480px) and (orientation: landscape) {
+    .hero {
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    /* Уменьшаем отступы для экономии места */
+    .hero-content h1 {
+        margin-bottom: 10px;
+    }
+    
+    .hero-content h2 {
+        margin-bottom: 10px;
+    }
+    
+    .hero-content p {
+        margin-bottom: 15px;
+    }
+    
+    /* Уменьшаем паддинги в секциях */
+    section {
+        padding: 40px 0;
+    }
+}
+
+/* Улучшения доступности и UX */
+@media (any-hover: none) {
+    /* Стили для устройств без наведения (тачскрин) */
+    .service-card:hover {
+        transform: none;
+    }
+    
+    .gallery-item:hover img {
+        transform: none;
+    }
+    
+    .neon-icon:hover {
+        transform: none;
+    }
+    
+    /* Увеличиваем размер интерактивных элементов для лучшего нажатия */
+    .menu li a,
+    .btn,
+    .service-link,
+    .footer-links ul li a {
+        padding: 8px 0;
+        display: inline-block;
+    }
+    
+    .dot {
+        width: 14px;
+        height: 14px;
+    }
+}
+
+/* Исправление для полной растяжки галерейных элементов */
+@media screen and (max-width: 768px) {
+    .gallery-grid {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .gallery-item {
+        width: 100%;
+    }
+}
+
+/* Улучшение для специфических элементов форм на мобильных */
+@media screen and (max-width: 576px) {
+    input[type="submit"], 
+    button[type="submit"] {
+        width: 100%;
+        padding: 15px !important;
+        font-size: 1rem !important;
+        margin-top: 10px;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    /* Улучшение доступности полей ввода на мобильных */
+    .form-group input,
+    .form-group textarea {
+        padding: 15px;
+        border-radius: 8px;
+        font-size: 16px; /* Предотвращает масштабирование на iOS */
+    }
+    
+    /* Улучшаем читаемость меток полей */
+    .form-group label {
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+        opacity: 0.9;
+    }
+}
+
+/* Фикс для блоков секций на мобильных */
+@media screen and (max-width: 768px) {
+    section {
+        overflow-x: hidden;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+}
+
+/* Стили для кастомного уведомления */
+.custom-alert {
+    animation: slideUp 0.3s ease forwards;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translate(-50%, 100%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+/* Дополнительные стили для прикосновений */
+@media (pointer: coarse) {
+    input, 
+    select, 
+    textarea, 
+    button, 
+    .btn,
+    .service-link, 
+    .menu li a, 
+    .footer-links a,
+    .dot,
+    .social-icons a {
+        min-height: 44px; /* Минимальная высота для хорошей области касания */
+    }
+    
+    .social-icons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+    }
+    
+    input[type="checkbox"], 
+    input[type="radio"] {
+        min-height: auto;
+        min-width: auto;
+        transform: scale(1.2);
+    }
+}
