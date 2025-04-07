@@ -6,6 +6,135 @@ document.addEventListener('DOMContentLoaded', function() {
     menuBtn.addEventListener('click', function() {
         menu.classList.toggle('active');
     });
+
+// Функция инициализации карусели сервисов
+function initServiceCarousel() {
+    const carousel = document.querySelector('.services-carousel');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const dotsContainer = document.querySelector('.carousel-dots');
+    
+    if (!carousel || !prevBtn || !nextBtn || !dotsContainer) return;
+    
+    const cards = Array.from(carousel.querySelectorAll('.service-card'));
+    const cardCount = cards.length;
+    let currentPage = 0;
+    let cardsPerPage = getCardsPerPage();
+    let totalPages = Math.ceil(cardCount / cardsPerPage);
+    
+    // Создаем точки навигации
+    for (let i = 0; i < totalPages; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToPage(i));
+        dotsContainer.appendChild(dot);
+    }
+    
+    // Инициализация состояния кнопок
+    updateButtonState();
+    
+    // Слушатели событий для кнопок
+    prevBtn.addEventListener('click', () => {
+        if (currentPage > 0) {
+            goToPage(currentPage - 1);
+        }
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        if (currentPage < totalPages - 1) {
+            goToPage(currentPage + 1);
+        }
+    });
+    
+    // Перейти на указанную страницу
+    function goToPage(pageIndex) {
+        currentPage = pageIndex;
+        const offset = -pageIndex * cardsPerPage * (carousel.scrollWidth / cardCount);
+        carousel.style.transform = `translateX(${offset}px)`;
+        
+        // Обновить активную точку
+        document.querySelectorAll('.dot').forEach((dot, index) => {
+            dot.classList.toggle('active', index === pageIndex);
+        });
+        
+        updateButtonState();
+    }
+    
+    // Обновить состояние кнопок
+    function updateButtonState() {
+        prevBtn.disabled = currentPage === 0;
+        nextBtn.disabled = currentPage === totalPages - 1;
+    }
+    
+    // Получить количество карточек на странице в зависимости от ширины экрана
+    function getCardsPerPage() {
+        const width = window.innerWidth;
+        if (width <= 576) return 1;
+        if (width <= 992) return 2;
+        if (width <= 1200) return 3;
+        return 4;
+    }
+    
+    // Обработка изменения размера окна
+    window.addEventListener('resize', () => {
+        const newCardsPerPage = getCardsPerPage();
+        
+        if (newCardsPerPage !== cardsPerPage) {
+            cardsPerPage = newCardsPerPage;
+            totalPages = Math.ceil(cardCount / cardsPerPage);
+            
+            // Обновить точки навигации
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalPages; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToPage(i));
+                dotsContainer.appendChild(dot);
+            }
+            
+            // Сбросить текущую страницу
+            currentPage = 0;
+            goToPage(0);
+            updateButtonState();
+        }
+    });
+    
+    // Инициализация свайпа для мобильных устройств
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    carousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, false);
+    
+    carousel.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, false);
+    
+    function handleSwipe() {
+        const swipeThreshold = 50; // Минимальное расстояние для свайпа
+        
+        if (touchEndX < touchStartX - swipeThreshold) {
+            // Свайп влево -> следующая страница
+            if (currentPage < totalPages - 1) {
+                goToPage(currentPage + 1);
+            }
+        }
+        
+        if (touchEndX > touchStartX + swipeThreshold) {
+            // Свайп вправо -> предыдущая страница
+            if (currentPage > 0) {
+                goToPage(currentPage - 1);
+            }
+        }
+    }
+}
+    
+    // Инициализация карусели сервисов
+    initServiceCarousel();
     
     // Плавная прокрутка для якорных ссылок
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
