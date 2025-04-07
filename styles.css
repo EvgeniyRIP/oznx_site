@@ -141,8 +141,9 @@ header .container {
 }
 
 .logo img {
-    height: 50px;
-    width: 50px;
+    padding: 10%;
+    height: 60px;
+    width: 60px;
     border-radius: 30%; /* Reduced from 50% to 30% to make it less circular */
     object-fit: contain;
     filter: drop-shadow(0 0 5px var(--neon-purple));
