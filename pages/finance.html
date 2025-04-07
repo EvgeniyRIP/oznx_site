@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OZNX - Финансовая аналитика</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Специфичные стили для страницы финансов */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .metric-card {
+            background: rgba(5, 5, 10, 0.7);
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(125, 71, 179, 0.25);
+            box-shadow: 0 0 10px rgba(125, 71, 179, 0.25);
+            text-align: center;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(125, 71, 179, 0.4);
+        }
+        
+        .metric-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--neon-purple);
+        }
+        
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--light-text);
+            text-shadow: 0 0 10px var(--neon-purple);
+        }
+        
+        .metric-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--light-text);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .metric-text {
+            color: var(--light-text);
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+        
+        .dashboard-section {
+            margin-top: 80px;
+            background: rgba(5, 5, 10, 0.85);
+            padding: 50px 0;
+            border-radius: 10px;
+        }
+        
+        .dashboard-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .dashboard-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .dashboard-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(125, 71, 179, 0.4);
+        }
+        
+        .dashboard-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .finance-features {
+            margin-top: 80px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .finance-feature {
+            background: rgba(5, 5, 10, 0.7);
+            border-radius: 10px;
+            padding: 25px;
+            border: 1px solid rgba(125, 71, 179, 0.25);
+            box-shadow: 0 0 10px rgba(125, 71, 179, 0.25);
+        }
+        
+        .feature-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .feature-icon {
+            font-size: 1.8rem;
+            color: var(--neon-purple);
+            margin-right: 15px;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            color: var(--light-text);
+        }
+        
+        .feature-desc {
+            color: var(--light-text);
+            opacity: 0.9;
+        }
+        
+        .cta-box {
+            background: rgba(125, 71, 179, 0.15);
+            border-radius: 10px;
+            padding: 40px;
+            margin: 60px 0;
+            text-align: center;
+            border: 1px solid rgba(125, 71, 179, 0.3);
+            box-shadow: 0 0 20px rgba(125, 71, 179, 0.3);
+        }
+        
+        .cta-box h2 {
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: var(--light-text);
+            text-shadow: 0 0 10px var(--neon-purple);
+        }
+        
+        .cta-box p {
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            color: var(--light-text);
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            margin: 40px 0;
+            border-collapse: collapse;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(125, 71, 179, 0.2);
+        }
+        
+        .comparison-table th {
+            background-color: rgba(125, 71, 179, 0.2);
+            color: var(--light-text);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        
+        .comparison-table td {
+            color: var(--light-text);
+            opacity: 0.9;
+        }
+        
+        .comparison-table tr:hover td {
+            background-color: rgba(125, 71, 179, 0.1);
+        }
+        
+        .check-icon {
+            color: #4CAF50;
+        }
+        
+        .times-icon {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html">
+                    <img src="../images/logo.jpg" alt="OZNX Logo">
+                </a>
+            </div>
+            <nav>
+                <ul class="menu">
+                    <li><a href="../index.html">Главная</a></li>
+                    <li><a href="../index.html#services">Сервисы</a></li>
+                    <li><a href="../index.html#gallery">Галерея</a></li>
+                    <li><a href="../index.html#about">О нас</a></li>
+                    <li><a href="../index.html#contact">Контакты</a></li>
+                </ul>
+            </nav>
+            <div class="menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Главный экран -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Финансовая аналитика</h1>
+                <h2>Прозрачность каждой копейки в вашем бизнесе</h2>
+                <p>Рассчитывайте чистую прибыль, анализируйте маржинальность и отслеживайте ROI с помощью нашей передовой аналитической платформы для маркетплейсов.</p>
+                <a href="#finance-features" class="btn glow-btn">Узнать о возможностях</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ключевые показатели -->
+    <section class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Все ваши финансы под контролем</h2>
+                <p>Полная аналитика финансовых показателей для принятия правильных решений</p>
+            </div>
+            
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="metric-value">+32%</div>
+                    <h3 class="metric-title">Рост прибыли</h3>
+                    <p class="metric-text">Среднее увеличение чистой прибыли у клиентов после 3 месяцев использования нашей системы</p>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-search-dollar"></i>
+                    </div>
+                    <div class="metric-value">98.7%</div>
+                    <h3 class="metric-title">Точность расчетов</h3>
+                    <p class="metric-text">Наши финансовые расчеты максимально приближены к реальным данным из отчетов маркетплейсов</p>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <div class="metric-value">15 сек</div>
+                    <h3 class="metric-title">Скорость расчетов</h3>
+                    <p class="metric-text">Моментальный расчет сложных финансовых метрик для тысяч товаров одновременно</p>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="metric-value">+18%</div>
+                    <h3 class="metric-title">Рост маржинальности</h3>
+                    <p class="metric-text">Клиенты повышают маржинальность своих товаров благодаря нашей подробной аналитике</p>
+                </div>
+            </div>
+            
+            <div class="cta-box">
+                <h2>Знаете ли вы реальную прибыльность своего бизнеса?</h2>
+                <p>Большинство продавцов маркетплейсов не учитывают до 40% скрытых расходов при расчете прибыли. Наша система автоматически учитывает все комиссии, логистику, рекламу и возвраты для точного расчета фактической прибыли.</p>
+                <a href="#contact" class="btn glow-btn">Рассчитать реальную прибыль</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Возможности финансовой аналитики -->
+    <section id="finance-features" class="finance-features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Что умеет наша финансовая аналитика</h2>
+                <p>Полный набор инструментов для контроля финансов вашего бизнеса</p>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="finance-feature">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h3 class="feature-title">Расчет чистой прибыли</h3>
+                    </div>
+                    <p class="feature-desc">Автоматический учет всех комиссий маркетплейса, логистики, хранения, рекламных затрат, возвратов и налогов для расчета реальной прибыли каждого товара.</p>
+                </div>
+                
+                <div class="finance-feature">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3 class="feature-title">Расчет маржинальности</h3>
+                    </div>
+                    <p class="feature-desc">Анализ маржинальности по каждому SKU, категории и временному периоду с рекомендациями по оптимизации ассортимента.</p>
+                </div>
+                
+                <div class="finance-feature">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3 class="feature-title">Анализ ROI рекламы</h3>
+                    </div>
+                    <p class="feature-desc">Расчет возврата инвестиций для каждой рекламной кампании с учетом всех затрат и конверсий, выявление эффективных и убыточных стратегий.</p>
+                </div>
+                
+                <div class="finance-feature">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <h3 class="feature-title">ABC-анализ товаров</h3>
+                    </div>
+                    <p class="feature-desc">Автоматическая классификация товаров по прибыльности для оптимизации закупок и маркетинговых усилий.</p>
+                </div>
+                
+                <div class="finance-feature">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h3 class="feature-title">Динамика финансовых показателей</h3>
+                    </div>
+                    <p class="feature-desc">Отслеживание изменений в выручке, прибыли, маржинальности и других ключевых показателях во времени с выявлением трендов.</p>
+                </div>
+                
+                <div class="finance-feature">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h3 class="feature-title">Система предупреждений</h3>
+                    </div>
+                    <p class="feature-desc">Автоматические уведомления о снижении маржинальности, росте затрат или рисках убыточности товаров.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Демонстрация дашборда -->
+    <section class="dashboard-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Ваш финансовый дашборд</h2>
+                <p>Все ключевые показатели в одном месте</p>
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="dashboard-text">
+                    <h3>Прозрачность каждой транзакции</h3>
+                    <p>Наш интерактивный дашборд предоставляет полную картину вашего финансового состояния на маркетплейсе в режиме реального времени.</p>
+                    <p>Основные преимущества дашборда:</p>
+                    <ul>
+                        <li>Визуализация всех финансовых потоков в наглядных графиках</li>
+                        <li>Детализация расходов по каждой категории</li>
+                        <li>Сравнение плановых и фактических показателей</li>
+                        <li>Прогнозирование финансовых результатов</li>
+                        <li>Выявление проблемных зон и потенциала для роста</li>
+                        <li>Удобные фильтры по периоду, категории, складу и другим параметрам</li>
+                    </ul>
+                    <a href="#" class="btn glow-btn">Попробовать демо-версию</a>
+                </div>
+                <div class="dashboard-image">
+                    <img src="../images/analytics2.jpg" alt="Финансовый дашборд">
+                </div>
+            </div>
+            
+            <div class="section-header" style="margin-top: 60px;">
+                <h2>Сравнение с другими решениями</h2>
+                <p>Почему наша финансовая аналитика превосходит конкурентов</p>
+            </div>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Функция</th>
+                        <th>OZNX Analytics</th>
+                        <th>Встроенная аналитика Ozon</th>
+                        <th>Типичные конкуренты</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Учет всех комиссий и скрытых расходов</td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td><i class="fas fa-times times-icon"></i></td>
+                        <td>Частично</td>
+                    </tr>
+                    <tr>
+                        <td>Расчет маржинальности по каждому SKU</td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td><i class="fas fa-times times-icon"></i></td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Интеграция расходов на рекламу</td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td>Частично</td>
+                        <td>Частично</td>
+                    </tr>
+                    <tr>
+                        <td>ABC-анализ товаров</td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td><i class="fas fa-times times-icon"></i></td>
+                        <td><i class="fas fa-times times-icon"></i></td>
+                    </tr>
+                    <tr>
+                        <td>Прогнозирование финансовых результатов</td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td><i class="fas fa-times times-icon"></i></td>
+                        <td>Частично</td>
+                    </tr>
+                    <tr>
+                        <td>Система предупреждений о рисках</td>
+                        <td><i class="fas fa-check check-icon"></i></td>
+                        <td><i class="fas fa-times times-icon"></i></td>
+                        <td><i class="fas fa-times times-icon"></i></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Призыв к действию -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Начните контролировать свои финансы</h2>
+                <p>7 дней бесплатного доступа к полной версии</p>
+            </div>
+            
+            <div class="cta-box">
+                <h2>Узнайте реальную прибыльность вашего бизнеса</h2>
+                <p>Получите доступ ко всем финансовым метрикам и аналитическим инструментам на 7 дней бесплатно. Никаких обязательств и скрытых платежей.</p>
+                <a href="#" class="btn glow-btn">Начать бесплатный период</a>
+            </div>
+            
+            <div class="contact-form neon-form">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Имя</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Телефон</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="marketplace">ID магазина на Ozon</label>
+                        <input type="text" id="marketplace" name="marketplace" required>
+                    </div>
+                    <button type="submit" class="btn glow-btn">Получить бесплатный доступ</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <h3>OZNX Analytics</h3>
+                    <p>Аналитика маркетплейсов для успешного бизнеса</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Быстрые ссылки</h3>
+                    <ul>
+                        <li><a href="../index.html">Главная</a></li>
+                        <li><a href="../index.html#services">Сервисы</a></li>
+                        <li><a href="../index.html#gallery">Галерея</a></li>
+                        <li><a href="../index.html#about">О нас</a></li>
+                        <li><a href="../index.html#contact">Контакты</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Социальные сети</h3>
+                    <div class="social-icons">
+                        <a href="#" class="neon-icon"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="neon-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="neon-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="neon-icon"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <h3>Контакты</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Москва, ул. Примерная, 123</p>
+                    <p><i class="fas fa-phone"></i> +7 (999) 123-45-67</p>
+                    <p><i class="fas fa-envelope"></i> info@oznx.ru</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 OZNX Analytics. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script>
+</body>
+</html>
