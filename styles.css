@@ -275,6 +275,8 @@ header .container {
     transition: transform 0.5s ease;
     gap: 30px;
     margin-bottom: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .service-card {
