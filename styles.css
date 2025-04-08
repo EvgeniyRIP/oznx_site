@@ -743,6 +743,90 @@ header .container {
     .footer-bottom p {
         font-size: 0.9rem;
     }
+
+    /* Исправляем проблему с обрезанием заголовков и текста */
+    .hero-content h1 {
+        font-size: 2.2rem;
+        text-align: center;
+        line-height: 1.2;
+        margin-bottom: 15px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        max-width: 100%;
+    }
+
+    .hero-content h2 {
+        font-size: 1.4rem;
+        text-align: center;
+        line-height: 1.3;
+        margin-bottom: 15px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+        text-align: center;
+        margin-bottom: 25px;
+        line-height: 1.5;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    header .container {
+        padding: 5px 20px; /* Уменьшаем вертикальный padding в 3 раза (с 15px до 5px) */
+        height: auto;
+    }
+    
+    header {
+        min-height: auto;
+    }
+    
+    /* Скрываем логотип в мобильной версии */
+    .logo {
+        display: none;
+    }
+    
+    /* Смещаем меню влево, так как логотип скрыт */
+    .menu-btn {
+        margin-left: 0;
+    }
+    
+    /* Компенсируем отсутствие логотипа в меню */
+    .menu.active {
+        top: 40px; /* Уменьшаем значение top в соответствии с новой высотой header */
+    }
+
+    /* Специальные стили для длинных слов в заголовках */
+    .hero-content h1, 
+    .section-header h2,
+    .hero-content h2 {
+        max-width: 100%;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+        text-size-adjust: 100%;
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        letter-spacing: 0.5px;
+    }
+    
+    /* Делаем контейнер шире */
+    .container {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 15px;
+        box-sizing: border-box;
+    }
+    
+    /* Улучшение для длинных слов и текста */
+    p, h1, h2, h3, h4, h5, h6 {
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+    }
 }
 
 /* Галерея */
@@ -1090,7 +1174,27 @@ footer {
 /* Адаптивность */
 @media screen and (max-width: 768px) {
     header .container {
-        padding: 15px 20px;
+        padding: 5px 20px; /* Уменьшаем вертикальный padding в 3 раза (с 15px до 5px) */
+        height: auto;
+    }
+    
+    header {
+        min-height: auto;
+    }
+    
+    /* Скрываем логотип в мобильной версии */
+    .logo {
+        display: none;
+    }
+    
+    /* Смещаем меню влево, так как логотип скрыт */
+    .menu-btn {
+        margin-left: 0;
+    }
+    
+    /* Компенсируем отсутствие логотипа в меню */
+    .menu.active {
+        top: 40px; /* Уменьшаем значение top в соответствии с новой высотой header */
     }
 
     .menu {
@@ -1161,24 +1265,32 @@ footer {
     }
     
     .hero-content h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
         text-align: center;
         line-height: 1.2;
         margin-bottom: 15px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        max-width: 100%;
     }
 
     .hero-content h2 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         text-align: center;
         line-height: 1.3;
         margin-bottom: 15px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     
     .hero-content p {
-        font-size: 1.1rem;
+        font-size: 1rem;
         text-align: center;
         margin-bottom: 25px;
         line-height: 1.5;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
     }
     
     .hero-content .btn {
@@ -1311,32 +1423,59 @@ footer {
 /* Добавляем медиа-запросы для очень маленьких экранов */
 @media screen and (max-width: 480px) {
     .hero-content h1 {
-        font-size: 2rem;
-        margin-bottom: 12px;
+        font-size: 1.8rem;
+        word-break: break-word;
+        padding: 0 10px;
+        margin-bottom: 10px;
+        letter-spacing: 1px; /* Уменьшаем расстояние между буквами */
     }
     
     .hero-content h2 {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
+        padding: 0 10px;
     }
     
     .hero-content p {
-        font-size: 1rem;
+        font-size: 0.95rem;
+        padding: 0 15px;
+        word-break: normal;
     }
     
     .hero-content .btn {
         width: 90%;
     }
     
+    /* Делаем контейнер шире для большей вместимости текста */
+    .container {
+        padding: 0 15px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    /* Дополнительная настройка для хедера на очень маленьких экранах */
+    header .container {
+        padding: 3px 15px;
+    }
+    
+    .menu.active {
+        top: 35px;
+    }
+    
+    /* Другие элементы, требующие корректировки */
+    section {
+        padding: 50px 0;
+    }
+    
     .section-header h2 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        padding: 0 5px;
+        word-break: break-word;
+        letter-spacing: 1px; /* Уменьшаем расстояние между буквами */
     }
     
     .section-header p {
         font-size: 0.95rem;
-    }
-    
-    section {
-        padding: 60px 0;
     }
     
     .gallery-item {
@@ -1382,6 +1521,13 @@ footer {
     .footer-about p,
     .footer-contact p {
         font-size: 1rem;
+    }
+    
+    /* Специальные стили для слова МАРКЕТПЛЕЙСОВ, которое обрезается */
+    .hero-content h1 {
+        text-size-adjust: 100%; /* Для адаптивного размера шрифта */
+        max-width: 100vw; /* Максимальная ширина - ширина вьюпорта */
+        overflow-x: visible;
     }
 }
 
@@ -1445,5 +1591,45 @@ footer {
             --neon-purple: #a866e0; /* Более яркий пурпурный для лучшей видимости */
             --light-text: #ffffff; /* Более яркий текст */
         }
+    }
+}
+
+/* Специальные стили для самых узких экранов */
+@media screen and (max-width: 380px) {
+    .hero-content h1 {
+        font-size: 1.6rem;
+        margin-bottom: 8px;
+        line-height: 1.1;
+        letter-spacing: 0;
+    }
+    
+    .hero-content h2 {
+        font-size: 1.1rem;
+    }
+    
+    .hero-content p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+    }
+    
+    .hero-content .btn {
+        font-size: 0.95rem;
+        width: 95%;
+    }
+    
+    /* Убираем все лишние отступы для экономии места */
+    .container {
+        padding: 0 10px;
+    }
+    
+    .section-header h2 {
+        font-size: 1.5rem;
+        letter-spacing: 0;
+        margin-bottom: 10px;
+    }
+    
+    /* Принудительно уменьшаем длинные слова */
+    .hero-content h1 {
+        font-size-adjust: 0.45;
     }
 }
