@@ -22,6 +22,31 @@ function initServiceCarousel() {
     let cardsPerPage = getCardsPerPage();
     let totalPages = Math.ceil(cardCount / cardsPerPage);
     
+    // Настраиваем размеры карточек для мобильных устройств
+    function setupMobileCardSizes() {
+        if (window.innerWidth <= 768) {
+            // Ширина видимой области карусели
+            const containerWidth = carousel.parentElement.clientWidth;
+            
+            // Настраиваем ширину каждой карточки
+            cards.forEach(card => {
+                // Используем 90% от ширины контейнера для карточки, чтобы избежать показа следующей
+                const cardWidth = containerWidth - 40; // 20px padding с каждой стороны
+                card.style.minWidth = `${cardWidth}px`;
+                card.style.width = `${cardWidth}px`;
+            });
+        } else {
+            // Сбрасываем стили для десктопа
+            cards.forEach(card => {
+                card.style.minWidth = '';
+                card.style.width = '';
+            });
+        }
+    }
+    
+    // Вызываем функцию настройки сразу
+    setupMobileCardSizes();
+    
     // Создаем точки навигации
     createDots();
     
@@ -61,10 +86,14 @@ function initServiceCarousel() {
         
         // Для мобильных устройств используем прокрутку
         if (window.innerWidth <= 768) {
-            const cardWidth = carousel.querySelector('.service-card').offsetWidth;
-            const scrollPosition = pageIndex * (cardWidth + 20); // 20px - отступ между карточками
+            const card = carousel.querySelectorAll('.service-card')[pageIndex];
+            if (!card) return;
+            
+            // Прокручиваем до точного положения карточки
+            const cardOffset = card.offsetLeft - 20; // Компенсируем левый отступ
+            
             carousel.scrollTo({
-                left: scrollPosition,
+                left: cardOffset,
                 behavior: 'smooth'
             });
         } else {
@@ -102,6 +131,9 @@ function initServiceCarousel() {
     window.addEventListener('resize', () => {
         const newCardsPerPage = getCardsPerPage();
         
+        // Настраиваем размеры карточек при изменении размера окна
+        setupMobileCardSizes();
+        
         if (newCardsPerPage !== cardsPerPage) {
             cardsPerPage = newCardsPerPage;
             totalPages = Math.ceil(cardCount / cardsPerPage);
@@ -125,18 +157,42 @@ function initServiceCarousel() {
             // Определяем текущую страницу на основе скролла
             isScrolling = setTimeout(() => {
                 const scrollPosition = carousel.scrollLeft;
-                const cardWidth = carousel.querySelector('.service-card').offsetWidth + 20; // Ширина карточки + отступ
-                const newPage = Math.round(scrollPosition / cardWidth);
+                
+                // Находим ближайшую карточку к текущей позиции скролла
+                let minDistance = Infinity;
+                let newPage = currentPage;
+                
+                cards.forEach((card, index) => {
+                    const cardPosition = card.offsetLeft - 20; // Компенсируем левый отступ
+                    const distance = Math.abs(scrollPosition - cardPosition);
+                    
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        newPage = index;
+                    }
+                });
                 
                 if (newPage !== currentPage && newPage >= 0 && newPage < totalPages) {
                     currentPage = newPage;
+                    
+                    // После завершения скролла выравниваем до ближайшей карточки
+                    const card = cards[newPage];
+                    const cardOffset = card.offsetLeft - 20;
+                    
+                    // Только если отклонение значительное
+                    if (Math.abs(scrollPosition - cardOffset) > 10) {
+                        carousel.scrollTo({
+                            left: cardOffset,
+                            behavior: 'smooth'
+                        });
+                    }
                     
                     // Обновить точки навигации
                     document.querySelectorAll('.dot').forEach((dot, index) => {
                         dot.classList.toggle('active', index === currentPage);
                     });
                 }
-            }, 50);
+            }, 100); // Немного увеличиваем задержку для более надежного определения
         });
     } else {
         // Инициализация свайпа для планшетов
