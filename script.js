@@ -14,7 +14,7 @@ function initServiceCarousel() {
     const nextBtn = document.querySelector('.next-btn');
     const dotsContainer = document.querySelector('.carousel-dots');
     
-    if (!carousel || !prevBtn || !nextBtn || !dotsContainer) return;
+    if (!carousel || !dotsContainer) return;
     
     const cards = Array.from(carousel.querySelectorAll('.service-card'));
     const cardCount = cards.length;
@@ -23,54 +23,76 @@ function initServiceCarousel() {
     let totalPages = Math.ceil(cardCount / cardsPerPage);
     
     // Создаем точки навигации
-    for (let i = 0; i < totalPages; i++) {
-        const dot = document.createElement('div');
-        dot.classList.add('dot');
-        if (i === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => goToPage(i));
-        dotsContainer.appendChild(dot);
-    }
+    createDots();
     
     // Инициализация состояния кнопок
-    updateButtonState();
+    if (prevBtn && nextBtn) {
+        updateButtonState();
+        
+        // Слушатели событий для кнопок
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 0) {
+                goToPage(currentPage - 1);
+            }
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages - 1) {
+                goToPage(currentPage + 1);
+            }
+        });
+    }
     
-    // Слушатели событий для кнопок
-    prevBtn.addEventListener('click', () => {
-        if (currentPage > 0) {
-            goToPage(currentPage - 1);
+    // Функция создания точек навигации
+    function createDots() {
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < totalPages; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToPage(i));
+            dotsContainer.appendChild(dot);
         }
-    });
-    
-    nextBtn.addEventListener('click', () => {
-        if (currentPage < totalPages - 1) {
-            goToPage(currentPage + 1);
-        }
-    });
+    }
     
     // Перейти на указанную страницу
     function goToPage(pageIndex) {
         currentPage = pageIndex;
-        const offset = -pageIndex * cardsPerPage * (carousel.scrollWidth / cardCount);
-        carousel.style.transform = `translateX(${offset}px)`;
+        
+        // Для мобильных устройств используем прокрутку
+        if (window.innerWidth <= 768) {
+            const cardWidth = carousel.querySelector('.service-card').offsetWidth;
+            const scrollPosition = pageIndex * (cardWidth + 20); // 20px - отступ между карточками
+            carousel.scrollTo({
+                left: scrollPosition,
+                behavior: 'smooth'
+            });
+        } else {
+            // Для десктопов используем transform
+            const offset = -pageIndex * cardsPerPage * (carousel.scrollWidth / cardCount);
+            carousel.style.transform = `translateX(${offset}px)`;
+        }
         
         // Обновить активную точку
         document.querySelectorAll('.dot').forEach((dot, index) => {
             dot.classList.toggle('active', index === pageIndex);
         });
         
-        updateButtonState();
+        if (prevBtn && nextBtn) {
+            updateButtonState();
+        }
     }
     
     // Обновить состояние кнопок
     function updateButtonState() {
-        prevBtn.disabled = currentPage === 0;
-        nextBtn.disabled = currentPage === totalPages - 1;
+        if (prevBtn) prevBtn.disabled = currentPage === 0;
+        if (nextBtn) nextBtn.disabled = currentPage === totalPages - 1;
     }
     
     // Получить количество карточек на странице в зависимости от ширины экрана
     function getCardsPerPage() {
         const width = window.innerWidth;
-        if (width <= 576) return 1;
+        if (width <= 768) return 1; // Всегда только 1 карточка на мобильном
         if (width <= 992) return 2;
         if (width <= 1200) return 3;
         return 4;
@@ -85,49 +107,66 @@ function initServiceCarousel() {
             totalPages = Math.ceil(cardCount / cardsPerPage);
             
             // Обновить точки навигации
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i < totalPages; i++) {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (i === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => goToPage(i));
-                dotsContainer.appendChild(dot);
-            }
+            createDots();
             
             // Сбросить текущую страницу
             currentPage = 0;
             goToPage(0);
-            updateButtonState();
         }
     });
     
-    // Инициализация свайпа для мобильных устройств
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    carousel.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, false);
-    
-    carousel.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, false);
-    
-    function handleSwipe() {
-        const swipeThreshold = 50; // Минимальное расстояние для свайпа
+    // Инициализация скролла для мобильных устройств
+    if (window.innerWidth <= 768) {
+        // Отслеживаем скролл карусели для мобильных
+        let isScrolling;
+        carousel.addEventListener('scroll', () => {
+            clearTimeout(isScrolling);
+            
+            // Определяем текущую страницу на основе скролла
+            isScrolling = setTimeout(() => {
+                const scrollPosition = carousel.scrollLeft;
+                const cardWidth = carousel.querySelector('.service-card').offsetWidth + 20; // Ширина карточки + отступ
+                const newPage = Math.round(scrollPosition / cardWidth);
+                
+                if (newPage !== currentPage && newPage >= 0 && newPage < totalPages) {
+                    currentPage = newPage;
+                    
+                    // Обновить точки навигации
+                    document.querySelectorAll('.dot').forEach((dot, index) => {
+                        dot.classList.toggle('active', index === currentPage);
+                    });
+                }
+            }, 50);
+        });
+    } else {
+        // Инициализация свайпа для планшетов
+        let touchStartX = 0;
+        let touchEndX = 0;
         
-        if (touchEndX < touchStartX - swipeThreshold) {
-            // Свайп влево -> следующая страница
-            if (currentPage < totalPages - 1) {
-                goToPage(currentPage + 1);
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+        
+        carousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+        
+        function handleSwipe() {
+            const swipeThreshold = 50; // Минимальное расстояние для свайпа
+            
+            if (touchEndX < touchStartX - swipeThreshold) {
+                // Свайп влево -> следующая страница
+                if (currentPage < totalPages - 1) {
+                    goToPage(currentPage + 1);
+                }
             }
-        }
-        
-        if (touchEndX > touchStartX + swipeThreshold) {
-            // Свайп вправо -> предыдущая страница
-            if (currentPage > 0) {
-                goToPage(currentPage - 1);
+            
+            if (touchEndX > touchStartX + swipeThreshold) {
+                // Свайп вправо -> предыдущая страница
+                if (currentPage > 0) {
+                    goToPage(currentPage - 1);
+                }
             }
         }
     }
@@ -236,74 +275,5 @@ function initServiceCarousel() {
             logo.style.filter = '';
             logo.style.transform = '';
         });
-    }
-
-    // Создаем анимацию для фона героя
-    const hero = document.querySelector('.hero');
-    if (hero) {
-        let particlesContainer = document.createElement('div');
-        particlesContainer.className = 'particles-container';
-        hero.appendChild(particlesContainer);
-        
-        // Создаем частицы
-        for (let i = 0; i < 50; i++) {
-            let particle = document.createElement('div');
-            particle.className = 'particle';
-            
-            // Рандомные стили для частиц
-            particle.style.width = Math.random() * 5 + 'px';
-            particle.style.height = particle.style.width;
-            particle.style.left = Math.random() * 100 + 'vw';
-            particle.style.top = Math.random() * 100 + 'vh';
-            particle.style.animationDuration = Math.random() * 15 + 5 + 's';
-            particle.style.animationDelay = Math.random() * 5 + 's';
-            
-            // Определяем цвет (фиолетовый или голубой)
-            let color = Math.random() > 0.5 ? 'var(--neon-purple)' : 'var(--neon-blue)';
-            particle.style.backgroundColor = color;
-            particle.style.boxShadow = '0 0 10px ' + color;
-            
-            particlesContainer.appendChild(particle);
-        }
-
-        // Добавляем стили для частиц
-        let style = document.createElement('style');
-        style.innerHTML = `
-        .particles-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
-        }
-        
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            opacity: 0.5;
-            pointer-events: none;
-            animation: float linear infinite;
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.5;
-            }
-            90% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-        `;
-        document.head.appendChild(style);
     }
 });

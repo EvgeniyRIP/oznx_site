@@ -412,6 +412,107 @@ header .container {
     opacity: 0.8;
 }
 
+/* Мобильная карусель */
+@media screen and (max-width: 768px) {
+    .carousel-nav {
+        display: none; /* Скрываем стрелки навигации на мобильных */
+    }
+    
+    .carousel-container {
+        padding: 0;
+        margin-top: 20px;
+    }
+    
+    .services-carousel {
+        padding: 0 20px;
+        overflow-x: auto; 
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+        gap: 20px;
+    }
+    
+    .services-carousel::-webkit-scrollbar {
+        display: none; /* Chrome, Safari and Opera */
+    }
+    
+    .service-card {
+        flex: 0 0 calc(100% - 40px); /* Точно одна карточка на экране */
+        min-width: calc(100% - 40px);
+        margin: 0;
+        scroll-snap-align: center;
+        min-height: 320px;
+        padding: 25px 20px;
+        background: rgba(15, 15, 26, 0.8); /* Более темный фон для карточек */
+    }
+    
+    .service-card h3 {
+        font-size: 2rem;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 0 8px var(--neon-purple), 0 0 15px var(--neon-purple);
+    }
+    
+    .service-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+    }
+    
+    .service-card p {
+        margin-bottom: 20px;
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+    
+    .service-link {
+        font-size: 1.2rem;
+        margin-top: auto;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        color: var(--neon-purple);
+    }
+    
+    .service-link i {
+        font-size: 0.9rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .service-link:hover i {
+        transform: translateX(5px);
+    }
+    
+    /* Индикаторы слайдов (точки) */
+    .mobile-dots {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        margin-top: 25px;
+        padding: 10px 0;
+    }
+    
+    .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(125, 71, 179, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .dot.active {
+        background: var(--neon-purple);
+        box-shadow: 0 0 10px var(--neon-purple), 0 0 15px var(--neon-purple);
+        transform: scale(1.1);
+    }
+}
+
 /* Галерея */
 .gallery {
     background-color: rgba(3, 3, 8, 0.95); /* Darker background */
