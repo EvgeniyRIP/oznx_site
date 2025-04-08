@@ -329,22 +329,47 @@ header .container {
 .carousel-dots {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 0;
     margin-top: 10px;
 }
 
 .dot {
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: rgba(125, 71, 179, 0.3);
     cursor: pointer;
     transition: all 0.3s ease;
+    margin: 0 6px;
+    position: relative;
+    aspect-ratio: 1/1;
+    flex: none;
 }
 
 .dot.active {
     background: var(--neon-purple);
-    box-shadow: 0 0 10px var(--neon-purple);
+    box-shadow: 0 0 10px var(--neon-purple), 0 0 15px var(--neon-purple);
+    transform: scale(1.2);
+}
+
+.dot:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid var(--neon-purple);
+    top: 0;
+    left: 0;
+    transform: scale(0);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.dot.active:after {
+    transform: scale(1.5);
+    opacity: 0.5;
 }
 
 @media screen and (max-width: 1200px) {
@@ -507,21 +532,38 @@ header .container {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 12px;
+        gap: 0;
         margin-top: 25px;
         padding: 10px 0;
         position: relative;
         z-index: 10;
     }
     
+    /* Специальные стили для точек в мобильной версии */
+    .mobile-dots .dot {
+        margin: 0 6px;
+        min-height: 10px; /* Переопределяем min-height */
+        height: 10px !important;
+        width: 10px !important;
+        display: block; /* Переопределяем display */
+        flex: none;
+        padding: 0;
+        box-sizing: content-box;
+    }
+    
     .dot {
         width: 10px;
         height: 10px;
+        min-height: 10px;
+        max-height: 10px;
         border-radius: 50%;
         background: rgba(125, 71, 179, 0.3);
         cursor: pointer;
         transition: all 0.3s ease;
+        aspect-ratio: 1/1;
+        display: block;
         position: relative;
+        margin: 0 6px;
     }
     
     .dot.active {
@@ -548,6 +590,158 @@ header .container {
     .dot.active:after {
         transform: scale(1.5);
         opacity: 0.5;
+    }
+
+    /* Адаптация галереи для мобильных устройств */
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+    
+    .gallery-item {
+        height: 200px;
+        margin-bottom: 0;
+    }
+    
+    /* Показываем оверлей сразу на мобильных устройствах для лучшей видимости информации */
+    .gallery-overlay {
+        transform: translateY(0);
+        background: linear-gradient(to top, rgba(8, 8, 16, 0.9) 30%, rgba(8, 8, 16, 0.7) 60%, rgba(8, 8, 16, 0.3) 90%, transparent);
+        padding: 15px;
+    }
+    
+    .gallery-overlay h3 {
+        font-size: 1.4rem;
+        margin-bottom: 8px;
+    }
+    
+    .gallery-overlay p {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+    
+    .neon-border::before {
+        animation-duration: 4s; /* Замедляем анимацию для экономии энергии на мобильных устройствах */
+    }
+
+    /* Улучшение секции "О нас" для мобильных устройств */
+    .about-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .neon-text-container {
+        padding: 25px 20px;
+    }
+    
+    .about-text p {
+        font-size: 1.05rem;
+        text-align: center;
+        line-height: 1.5;
+    }
+    
+    /* Улучшение контактной формы для мобильных устройств */
+    .contact-form {
+        max-width: 100%;
+    }
+    
+    .neon-form {
+        padding: 25px 20px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-group label {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: 15px;
+        font-size: 1.1rem;
+        border-radius: 8px;
+    }
+    
+    .form-group textarea {
+        min-height: 120px;
+    }
+    
+    .contact-form .btn {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.1rem;
+        margin-top: 10px;
+    }
+
+    /* Улучшение футера для мобильных устройств */
+    footer {
+        padding: 50px 0 20px;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        text-align: center;
+    }
+    
+    .footer-about h3,
+    .footer-links h3,
+    .footer-social h3,
+    .footer-contact h3 {
+        font-size: 1.4rem;
+        margin-bottom: 20px;
+    }
+    
+    .footer-about h3::after,
+    .footer-links h3::after,
+    .footer-social h3::after,
+    .footer-contact h3::after {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+    }
+    
+    .footer-about p {
+        font-size: 1.05rem;
+        line-height: 1.5;
+    }
+    
+    .footer-links ul li {
+        margin-bottom: 15px;
+    }
+    
+    .footer-links ul li a {
+        font-size: 1.1rem;
+        padding: 5px;
+        display: inline-block;
+    }
+    
+    .social-icons {
+        justify-content: center;
+    }
+    
+    .social-icons a {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+    
+    .footer-contact p {
+        justify-content: center;
+        font-size: 1.05rem;
+        margin-bottom: 15px;
+    }
+    
+    .footer-bottom {
+        margin-top: 15px;
+        padding-top: 15px;
+    }
+    
+    .footer-bottom p {
+        font-size: 0.9rem;
     }
 }
 
@@ -910,6 +1104,10 @@ footer {
         transition: all 0.3s ease;
         box-shadow: 0 10px 15px rgba(138, 43, 226, 0.3);
         backdrop-filter: blur(10px);
+        z-index: 1000;
+        padding: 15px 0;
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
     }
 
     .menu.active {
@@ -920,17 +1118,108 @@ footer {
         margin: 0;
         padding: 15px 0;
     }
+    
+    .menu li a {
+        font-size: 1.3rem; /* Увеличиваем размер шрифта для лучшей читаемости */
+        display: block;
+        padding: 10px 0;
+    }
 
     .menu-btn {
         display: block;
+        font-size: 1.8rem; /* Увеличиваем размер кнопки меню */
+        padding: 5px;
     }
 
+    /* Увеличиваем размер логотипа для легкой идентификации */
+    .logo img {
+        height: 50px;
+        width: 50px;
+    }
+    
+    /* Добавляем стили для анимации открытия меню */
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .menu.active li {
+        animation: fadeInDown 0.3s ease forwards;
+        animation-delay: calc(0.05s * var(--i, 0));
+        opacity: 0;
+    }
+    
+    /* Дополнительные стили для шапки в мобильной версии */
+    header.scrolled {
+        padding: 5px 0;
+    }
+    
     .hero-content h1 {
         font-size: 2.5rem;
+        text-align: center;
+        line-height: 1.2;
+        margin-bottom: 15px;
     }
 
     .hero-content h2 {
         font-size: 1.5rem;
+        text-align: center;
+        line-height: 1.3;
+        margin-bottom: 15px;
+    }
+    
+    .hero-content p {
+        font-size: 1.1rem;
+        text-align: center;
+        margin-bottom: 25px;
+        line-height: 1.5;
+    }
+    
+    .hero-content .btn {
+        display: block;
+        width: 80%;
+        margin: 0 auto;
+        padding: 15px;
+        font-size: 1.1rem;
+        text-align: center;
+    }
+    
+    .hero {
+        padding-top: 90px;
+        height: auto;
+        min-height: 100vh;
+        padding-bottom: 50px;
+    }
+    
+    /* Уменьшаем вертикальные отступы секций на мобильных устройствах */
+    section {
+        padding: 70px 0;
+    }
+    
+    /* Увеличиваем отступ контейнера по бокам для лучшей читаемости */
+    .container {
+        padding: 0 25px;
+    }
+    
+    /* Адаптируем заголовки секций */
+    .section-header h2 {
+        font-size: 2rem;
+        margin-bottom: 15px;
+    }
+    
+    .section-header p {
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+    
+    .section-header {
+        margin-bottom: 30px;
     }
 
     .about-content {
@@ -1017,4 +1306,144 @@ footer {
 .service-link:hover:after {
     width: 100%;
     background-color: var(--neon-blue);
+}
+
+/* Добавляем медиа-запросы для очень маленьких экранов */
+@media screen and (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 2rem;
+        margin-bottom: 12px;
+    }
+    
+    .hero-content h2 {
+        font-size: 1.3rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+    }
+    
+    .hero-content .btn {
+        width: 90%;
+    }
+    
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+    
+    .section-header p {
+        font-size: 0.95rem;
+    }
+    
+    section {
+        padding: 60px 0;
+    }
+    
+    .gallery-item {
+        height: 180px;
+    }
+    
+    .gallery-overlay h3 {
+        font-size: 1.2rem;
+    }
+    
+    .gallery-overlay p {
+        font-size: 0.9rem;
+    }
+    
+    .service-card h3 {
+        font-size: 1.7rem;
+    }
+    
+    .service-card p {
+        font-size: 1rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: 12px;
+        font-size: 1rem;
+    }
+    
+    .social-icons a {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+    
+    .footer-about h3,
+    .footer-links h3,
+    .footer-social h3,
+    .footer-contact h3 {
+        font-size: 1.3rem;
+    }
+    
+    .footer-links ul li a,
+    .footer-about p,
+    .footer-contact p {
+        font-size: 1rem;
+    }
+}
+
+/* Стили для сенсорных устройств */
+@media (hover: none) {
+    /* Стили для активных элементов при касании */
+    .touch-active {
+        transform: scale(0.98) !important;
+        opacity: 0.9;
+        transition: transform 0.1s ease, opacity 0.1s ease !important;
+    }
+    
+    /* Дополнительные стили для кнопок при касании */
+    .btn.touch-active {
+        box-shadow: 0 0 15px var(--neon-purple), 0 0 30px var(--neon-purple) !important;
+    }
+    
+    /* Стили для активного пункта меню */
+    .menu li a.active {
+        color: var(--neon-blue);
+        text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue);
+    }
+    
+    .menu li a.active::after {
+        width: 100%;
+    }
+    
+    /* Улучшение фокуса и активных состояний для форм */
+    input:focus, textarea:focus, button:active {
+        outline: 2px solid var(--neon-purple);
+        box-shadow: 0 0 10px var(--neon-purple);
+    }
+}
+
+/* Дополнительные стили для лучшей производительности на мобильных устройствах */
+@media screen and (max-width: 768px) {
+    /* Оптимизация анимаций */
+    * {
+        backface-visibility: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+    
+    /* Замедляем сложные анимации для экономии заряда батареи */
+    .neon-card::before,
+    .neon-border::before,
+    .glow-btn::before {
+        animation-duration: 4s;
+    }
+    
+    /* Увеличиваем область касания для ссылок */
+    a, button, .service-link {
+        min-height: 44px; /* По рекомендациям Apple для сенсорных целей */
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Стили для режима темной темы на мобильных устройствах */
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --neon-purple: #a866e0; /* Более яркий пурпурный для лучшей видимости */
+            --light-text: #ffffff; /* Более яркий текст */
+        }
+    }
 }

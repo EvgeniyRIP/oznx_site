@@ -2,10 +2,52 @@ document.addEventListener('DOMContentLoaded', function() {
     // Мобильное меню
     const menuBtn = document.querySelector('.menu-btn');
     const menu = document.querySelector('.menu');
+    const menuItems = document.querySelectorAll('.menu li a');
     
     menuBtn.addEventListener('click', function() {
         menu.classList.toggle('active');
     });
+    
+    // Закрывать меню при клике на пункт меню
+    menuItems.forEach(item => {
+        item.addEventListener('click', function() {
+            menu.classList.remove('active');
+        });
+    });
+    
+    // Закрывать меню при клике вне меню на мобильных устройствах
+    document.addEventListener('click', function(event) {
+        if (window.innerWidth <= 768) {
+            const isMenuClicked = menu.contains(event.target) || menuBtn.contains(event.target);
+            if (!isMenuClicked && menu.classList.contains('active')) {
+                menu.classList.remove('active');
+            }
+        }
+    });
+    
+    // Активировать текущий пункт меню при скролле
+    const sections = document.querySelectorAll('section');
+    
+    function activateMenuItem() {
+        const scrollPosition = window.scrollY;
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop - 100;
+            const sectionBottom = sectionTop + section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                document.querySelectorAll('.menu li a').forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('href') === `#${sectionId}`) {
+                        item.classList.add('active');
+                    }
+                });
+            }
+        });
+    }
+    
+    window.addEventListener('scroll', activateMenuItem);
 
 // Функция инициализации карусели сервисов
 function initServiceCarousel() {
@@ -332,4 +374,15 @@ function initServiceCarousel() {
             logo.style.transform = '';
         });
     }
+
+    // Улучшаем отзывчивость на сенсорных устройствах
+    document.querySelectorAll('.service-card, .gallery-item, .btn').forEach(element => {
+        element.addEventListener('touchstart', function() {
+            this.classList.add('touch-active');
+        });
+        
+        element.addEventListener('touchend', function() {
+            this.classList.remove('touch-active');
+        });
+    });
 });
